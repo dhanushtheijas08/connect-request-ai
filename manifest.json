@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "LinkBuddy",
+  "version": "0.0.1",
+  "permissions": ["tabs"],
+  "host_permissions": ["https://*.amazonaws.com/*", "https://api.openai.com/*"],
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*", "https://www.linkedin.in/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
