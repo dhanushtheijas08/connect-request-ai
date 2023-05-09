@@ -2,6 +2,23 @@
 
 //   // console.log("hi");
 
+<<<<<<< HEAD
+=======
+  let requestPerson = {};
+  const fetchData = function () {
+    const name = document.querySelector( ".text-heading-xlarge");
+    const skills = document.querySelector(".text-body-medium").textContent;
+    const aboutParent = document.querySelector("#about").parentElement;
+    const about = aboutParent.querySelector(".pv-shared-text-with-see-more .visually-hidden").textContent;
+    requestPerson = {
+      name: name.textContent,
+      url: name.baseURI,
+      skills,
+      about
+    };
+    console.log("Data Fetched");
+  };
+>>>>>>> 19a9370be98a366bb41eb02647caef88dcb53fcd
 
 //   // const content = document.querySelector(".pv-top-card-v2-ctas");
 //   // const htmlBtn = `<button class="artdeco-button artdeco-button--2 artdeco-button--secondary ember-view fetch-data-btn">Fetch Data</button>`;
