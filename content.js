@@ -6,7 +6,7 @@ window.onload = function () {
 
   let requestPerson = {};
   const fetchData = function () {
-    const name = document.querySelector(".text-heading-xlarge");
+    const name = document.querySelector( ".text-heading-xlarge");
     const skills = document.querySelector(".text-body-medium").textContent;
     const aboutParent = document.querySelector("#about").parentElement;
     const about = aboutParent.querySelector(".pv-shared-text-with-see-more .visually-hidden").textContent;
