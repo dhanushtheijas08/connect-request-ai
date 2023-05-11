@@ -20,7 +20,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
 // Send request to OpenAI API and receive response
 async function fetchData(request) {
   const url = "https://api.openai.com/v1/completions";
-  const apiKey = "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";
+  const apiKey = "";
 
   // Generate request prompt with user data
   const prompt = `generate a request note for giving request in linkedin me to ${request.name} based on their skills and intrested are ${request.skills} and background? Here's a short summary: ${request.about}. And, here's the link to their profile for more information: ${globalTaburl} under 300 characters and end with an interesting question so that they can reply.`;
