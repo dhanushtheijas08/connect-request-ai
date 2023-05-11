@@ -12,10 +12,5 @@ btn.addEventListener("click", function () {
   });
 });
 
-newBtn.addEventListener("click", function () {
-  storage.get(null, function (result) {
-    console.log('Value currently is ' + result.api_key);
-  });
-})
 
 
