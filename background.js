@@ -2,7 +2,7 @@ let globalTaburl;
 // For inject content.js file
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
   chrome.tabs.get(tabId, function (tabInfo) {
-    if (changeInfo.status !== "complete")  return;
+    if (changeInfo.status !== "complete") return;
     if (
       tabInfo.url.match(/^https:\/\/www\.linkedin\.com\/in\/[^/]+\/$/) &&
       tabInfo.width >= 1280
