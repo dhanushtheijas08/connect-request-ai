@@ -19,8 +19,3 @@ newBtn.addEventListener("click", function () {
 })
 
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.action == "getStorage") {
-    sendResponse({ storage: "storage" });
-  }
-});

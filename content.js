@@ -1,111 +1,68 @@
-// window.onload = function () {
+console.log("This is content script file");
 
-//   // console.log("hi");
+let userData = {};
 
-<<<<<<< HEAD
-=======
-  let requestPerson = {};
-  const fetchData = function () {
-    const name = document.querySelector( ".text-heading-xlarge");
-    const skills = document.querySelector(".text-body-medium").textContent;
-    const aboutParent = document.querySelector("#about").parentElement;
-    const about = aboutParent.querySelector(".pv-shared-text-with-see-more .visually-hidden").textContent;
-    requestPerson = {
-      name: name.textContent,
-      url: name.baseURI,
-      skills,
-      about
-    };
-    console.log("Data Fetched");
+const profileActions = document.querySelector(".pv-top-card-v2-ctas");
+const fetchBtn = `<button class="artdeco-button artdeco-button--2 artdeco-button--secondary ember-view fetch-data">Get Data</button>`;
+profileActions.insertAdjacentHTML("afterbegin", fetchBtn);
+const newFetchBtn = document.querySelector(".fetch-data");
+
+let isBtnAdded = false
+let generateNoteBtn;
+const fetchUserData = function () {
+  const name = document.querySelector(".text-heading-xlarge").textContent;
+  const skills = document.querySelector(".text-body-medium").textContent;
+  const aboutParent = document.querySelector("#about")
+    ? document.querySelector("#about").parentElement
+    : null;
+
+  const about = aboutParent
+    ? aboutParent.querySelector(
+      ".pv-shared-text-with-see-more .visually-hidden"
+    ).textContent
+    : "No about section";
+  userData = {
+    name,
+    skills,
+    about,
   };
->>>>>>> 19a9370be98a366bb41eb02647caef88dcb53fcd
+  generateNoteBtn = "btn"
+};
 
-//   // const content = document.querySelector(".pv-top-card-v2-ctas");
-//   // const htmlBtn = `<button class="artdeco-button artdeco-button--2 artdeco-button--secondary ember-view fetch-data-btn">Fetch Data</button>`;
-//   // content.insertAdjacentHTML("afterbegin", htmlBtn);
+newFetchBtn.addEventListener("click", fetchUserData);
 
-//   // let requestPerson = {};
-//   // const fetchData = function () {
-//   //   const name = document.querySelector(".text-heading-xlarge");
-//   //   const skills = document.querySelector(".text-body-medium").textContent;
-//   //   const aboutParent = document.querySelector("#about").parentElement;
-//   //   const about = aboutParent.querySelector(".pv-shared-text-with-see-more .visually-hidden").textContent;
-//   //   requestPerson = {
-//   //     name: name.textContent,
-//   //     url: name.baseURI,
-//   //     skills,
-//   //     about
-//   //   };
-//   //   console.log("Data Fetched");
-//   // };
+function handleFocusIn(event) {
+  const connectButton = event.target.classList.contains("connect-button-send-invite__custom-message");
+  if (!connectButton) {
+    return;
+  }
 
-//   // document.addEventListener("focusin", async function (event) {
-//   //   if (event.target.classList.contains("connect-button-send-invite__custom-message")) {
-//   //     const textField = document.querySelector(".connect-button-send-invite__custom-message");
-//   //     const generateBtn = `<button class="artdeco-button artdeco-button--2 artdeco-button--secondary ember-view generate-note-btn">Generate Note</button>`;
-//   //     const sm = document.querySelector(".artdeco-modal__actionbar");
-//   //     sm.insertAdjacentHTML("afterbegin", generateBtn);
-//   //     const grn = document.querySelector(".generate-note-btn");
+  const customMessageField = document.querySelector(".connect-button-send-invite__custom-message");
+  const bottomBar = document.querySelector(".artdeco-modal__actionbar");
+  const generateNoteButton = `<button class="artdeco-button artdeco-button--2 artdeco-button--secondary ember-view generate-note-btn">Generate Note</button>`;
 
-//   //     let sendMsg = async function () {
-//   //       const responseText = await makeApiRequest(requestPerson);
-//   //       console.log(responseText);
-//   //       emulateWriting("connect-button-send-invite__custom-message", responseText, grn, sendMsg);
-//   //     }
+  if (generateNoteBtn) {
+    bottomBar.insertAdjacentHTML("afterbegin", generateNoteButton);
+    generateNoteBtn = document.querySelector(".generate-note-btn");
+    generateNoteBtn.addEventListener("click", () => sendData(userData))
+    generateNoteBtn = undefined
+  }
+}
 
-//   //     grn.addEventListener("click", sendMsg);
-//   //   }
-//   // });
 
-//   // const btn = document.querySelector('.fetch-data-btn');
-//   // btn.addEventListener('click', fetchData);
-// };
+function sendData(userData) {
+  console.log(userData);
+  chrome.runtime.sendMessage({ userData });
+}
 
-// function emulateWriting(elementName, text, removeEle, handleClick) {
-//   const input = document.querySelector(`.${elementName}`);
-//   let i = 0;
-//   const interval = setInterval(() => {
-//     if (i < text.length) {
-//       input.value += text[i];
-//       i++;
-//       for (let j = 0; j < 10; j++) {
-//         if (i < text.length) {
-//           input.value += text[i];
-//           i++;
-//         }
-//       }
-//     } else {
-//       clearInterval(interval);
-//       // removeEle.removeEventListener('click', handleClick);
-//     }
-//   }, 10);
-// }
+document.addEventListener("focusin", handleFocusIn);
 
-// async function makeApiRequest(requestPerson) {
-//   const url = 'https://api.openai.com/v1/completions';
-//   const apiKey = '';
-
-//   const prompt = `generate a request note for giving request in linkedin me to ${requestPerson.name} based on their skills and background? Here's a short summary: ${requestPerson.about}. And, here's the link to their profile for more information: ${requestPerson.url} under 300 characters and end with an interesting question so that they can reply.`;
-
-//   const options = {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${apiKey}`
-//     },
-//     body: JSON.stringify({
-//       model: "text-davinci-003",
-//       prompt: prompt,
-//       temperature: 0.7,
-//       max_tokens: 2000
-//     })
-//   };
-//   const response = await fetch(url, options);
-//   const result = await response.json();
-
-//   if (response.ok) {
-//     return result.choices[0].text;
-//   } else {
-//     console.log(`Error: ${result.error.message}`);
-//   }
-// }
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request) {
+    console.log(request);
+    str = request.replace(/\s+/g, ' ');
+    console.log(str);
+    let input = document.querySelector("#custom-message");
+    input.value = str;
+  }
+});
