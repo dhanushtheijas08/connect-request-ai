@@ -7,7 +7,6 @@ const fetchBtn = `<button class="artdeco-button artdeco-button--2 artdeco-button
 profileActions.insertAdjacentHTML("afterbegin", fetchBtn);
 const newFetchBtn = document.querySelector(".fetch-data");
 
-let isBtnAdded = false
 let generateNoteBtn;
 const fetchUserData = function () {
   const name = document.querySelector(".text-heading-xlarge").textContent;
