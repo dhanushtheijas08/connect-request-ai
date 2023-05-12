@@ -2,14 +2,19 @@
 
 let inputKey = document.querySelector(".input");
 let btn = document.querySelector(".btn");
-let newBtn = document.querySelector(".new-btn")
-
+let clearBtn = document.querySelector(".clear-btn")
+let currentBtn = document.querySelector(".current-btn")
 btn.addEventListener("click", function () {
-  const data = { api_key: inputKey.value };
-  chrome.runtime.sendMessage({ data }, function(response) {
-    console.log("Response received from background.js:", response);
-  });
+  const userData = { api_key: inputKey.value, status: "store api key" };
+  chrome.runtime.sendMessage({ userData });
 });
 
+clearBtn.addEventListener("click", function () {
+  const userData = { status: "delete api key" };
+  chrome.runtime.sendMessage({ userData });
+})
 
-
+currentBtn.addEventListener("click", function() {
+  const userData = { status: "show api key" };
+  chrome.runtime.sendMessage({ userData });
+})

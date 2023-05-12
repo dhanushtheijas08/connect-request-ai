@@ -1,5 +1,4 @@
 let globalTaburl;
-
 // Listen for tab updates and inject content.js file
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
   chrome.tabs.get(tabId, function (tabInfo) {
@@ -17,13 +16,20 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
   });
 });
 
+let getApiKey = async function () {
+  let result = await chrome.storage.sync.get(['apiKey']);
+  return result.apiKey;
+}
+
 // Send request to OpenAI API and receive response
 async function fetchData(request) {
+
   const url = "https://api.openai.com/v1/completions";
-  const apiKey = "";
+  let apiKey = await getApiKey();
+  console.log("🚀  apiKey:", apiKey)
 
   // Generate request prompt with user data
-  const prompt = `generate a request note for giving request in linkedin me to ${request.name} based on their skills and intrested are ${request.skills} and background? Here's a short summary: ${request.about}. And, here's the link to their profile for more information: ${globalTaburl} under 300 characters and end with an interesting question so that they can reply.`;
+  const prompt = `generate a request note in professional way for giving request in linkedin me to ${request.name} based on their skills and intrested are ${request.skills} and background? Here's a short summary: ${request.about}. And, here's the link to their profile for more information: ${globalTaburl} under 300 characters and end with an interesting question so that they can reply.`;
 
   // Send request to OpenAI API
   const options = {
@@ -36,7 +42,7 @@ async function fetchData(request) {
       model: "text-davinci-003",
       prompt: prompt,
       temperature: 0.7,
-      max_tokens: 1000,
+      max_tokens: 10,
     }),
   };
   const response = await fetch(url, options);
@@ -63,15 +69,26 @@ async function fetchData(request) {
 
 // Get user data from content.js file and send request to OpenAI API
 chrome.runtime.onMessage.addListener(async function ({ userData }, sender, sendResponse) {
-  // if (userData.name !== undefined) {
-  //   await fetchData(userData);
-  // }
-  // else if (userData.data !== undefined) {
-  //   const response = { message: "Data received successfully" };
-  //   sendResponse(response);
-  // }
   if (sender.url.includes("popup.html")) {
-    console.log("To set api key");
+    if (userData.status === "store api key") {
+      console.log(userData);
+      // Storing the API key
+      chrome.storage.sync.set({ apiKey: userData.api_key }, function () {
+        console.log('API key stored.');
+      });
+    }
+    else if (userData.status === "delete api key") {
+      // Deleting the stored data
+      chrome.storage.sync.remove(['apiKey'], function () {
+        console.log('API key deleted.');
+      });
+    }
+    else if (userData.status === "show api key") {
+      // Retrieving the stored data
+      chrome.storage.sync.get(['apiKey'], function (result) {
+        console.log('API key retrieved: ' + result.apiKey);
+      });
+    }
   }
   else {
     await fetchData(userData);
