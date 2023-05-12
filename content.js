@@ -1,6 +1,6 @@
 console.log("This is content script file");
 
-let userData = {}; // declare userData variable
+let userData = {};
 
 // add fetch button
 const profileActions = document.querySelector(".pv-top-card-v2-ctas");
@@ -8,9 +8,7 @@ const fetchBtn = `<button class="artdeco-button artdeco-button--2 artdeco-button
 profileActions.insertAdjacentHTML("afterbegin", fetchBtn);
 const newFetchBtn = document.querySelector(".fetch-data");
 
-let generateNoteBtn; // declare generateNoteBtn variable
-
-// fetch user data function
+let generateNoteBtn;
 const fetchUserData = function () {
   // get user data
   const name = document.querySelector(".text-heading-xlarge").textContent;
@@ -31,9 +29,7 @@ const fetchUserData = function () {
     skills,
     about,
   };
-
-  // set generateNoteBtn to undefined
-  generateNoteBtn = "Add Button";
+  generateNoteBtn = "btn"
 };
 
 // add event listener to fetch button
@@ -50,16 +46,15 @@ function handleFocusIn(event) {
   const bottomBar = document.querySelector(".artdeco-modal__actionbar");
   const generateNoteButton = `<button class="artdeco-button artdeco-button--2 artdeco-button--secondary ember-view generate-note-btn">Generate Note</button>`;
 
-  if (!generateNoteBtn) {
-    // add generate note button
+  if (generateNoteBtn) {
     bottomBar.insertAdjacentHTML("afterbegin", generateNoteButton);
     generateNoteBtn = document.querySelector(".generate-note-btn");
-    // add event listener to generate note button to send user data
-    generateNoteBtn.addEventListener("click", () => sendData(userData));
+    generateNoteBtn.addEventListener("click", () => sendData(userData))
+    generateNoteBtn = undefined
   }
 }
 
-// function to send user data
+
 function sendData(userData) {
   chrome.runtime.sendMessage({ userData });
 }
@@ -77,5 +72,3 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     input.value = str; // set received message to input field value
   }
 });
-
-

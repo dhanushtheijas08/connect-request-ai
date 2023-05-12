@@ -62,8 +62,18 @@ async function fetchData(request) {
 }
 
 // Get user data from content.js file and send request to OpenAI API
-chrome.runtime.onMessage.addListener(async function ({ userData }) {
-  if (userData) {
+chrome.runtime.onMessage.addListener(async function ({ userData }, sender, sendResponse) {
+  // if (userData.name !== undefined) {
+  //   await fetchData(userData);
+  // }
+  // else if (userData.data !== undefined) {
+  //   const response = { message: "Data received successfully" };
+  //   sendResponse(response);
+  // }
+  if (sender.url.includes("popup.html")) {
+    console.log("To set api key");
+  }
+  else {
     await fetchData(userData);
   }
 });
