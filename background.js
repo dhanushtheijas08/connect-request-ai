@@ -42,7 +42,7 @@ async function fetchData(request) {
       model: "text-davinci-003",
       prompt: prompt,
       temperature: 0.7,
-      max_tokens: 10,
+      max_tokens: 2000,
     }),
   };
   const response = await fetch(url, options);
