@@ -2,7 +2,7 @@ let globalTaburl;
 // Listen for tab updates and inject content.js file
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
   chrome.tabs.get(tabId, function (tabInfo) {
-    if (changeInfo.status !== "complete") return;
+    if (changeInfo.status !== "complete" ) return;
     if (
       tabInfo.url.match(/^https:\/\/www\.linkedin\.com\/in\/[^/]+\/$/) && // check if LinkedIn profile page
       tabInfo.width >= 1280 // check if window size is large enough
