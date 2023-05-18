@@ -3,7 +3,7 @@ console.log("This is content script file");
 let userData = {};
 
 // add fetch button
-const profileActions = document.querySelector(".pv-top-card-v2-ctas");
+const profileActions = document.querySelector(".pv-top-card-v2-ctas" );
 const fetchBtn = `<button class="artdeco-button artdeco-button--2 artdeco-button--secondary ember-view fetch-data">Get Data</button>`;
 profileActions.insertAdjacentHTML("afterbegin", fetchBtn);
 const newFetchBtn = document.querySelector(".fetch-data");
